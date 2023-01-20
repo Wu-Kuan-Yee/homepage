@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="https://yk-liu.github.io/favicon.ico?">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Pointing to the Moon | Blog of Yingkai Liu</title>
+<meta name="generator" content="Jekyll v3.9.2" />
+<meta property="og:title" content="Pointing to the Moon" />
+<meta name="author" content="Yingkai Liu" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog of Yingkai Liu" />
+<meta property="og:description" content="Blog of Yingkai Liu" />
+<link rel="canonical" href="https://yk-liu.github.io/" />
+<meta property="og:url" content="https://yk-liu.github.io/" />
+<meta property="og:site_name" content="Pointing to the Moon" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pointing to the Moon" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"Yingkai Liu"},"description":"Blog of Yingkai Liu","headline":"Pointing to the Moon","name":"Pointing to the Moon","url":"https://yk-liu.github.io/"}</script>
+<!-- End Jekyll SEO tag -->
+
+      <!-- main style sheet -->  
+      <link rel="stylesheet" href="https://yk-liu.github.io/assets/css/home.css">
+      <!-- font awesome --> 
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+      <!-- google font-->
+      <link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro|Ubuntu+Mono" rel="stylesheet">
+      <!-- --> 
+   </head>
+   <body>
+      <div id="particles-js" style="background-image: url('https://yk-liu.github.io/about/Moon.png');background-size: 20%;background-repeat: no-repeat;background-position: 80% 20%;">
+         <div class="header">
+            <h1>
+               <span class="site-title">Pointing to the Moon</span>
+               <span class="site-description">Blog of Yingkai Liu</span>
+            </h1>
+            <div class="header-links">
+               <a class="link" href="/blog">Posts</a>
+               <!-- <a class="link" href="/repo" >Codes</a> -->
+               <a class="link" href="/about" >About</a>
+            </div>
+         </div>
+         <a class="down" href="#about" data-scroll><i class="icon fas fa-chevron-down fa-lg" aria-hidden="true" style="z-index: 2;"></i></a>
+      </div>
+      <section id="about">
+         <div class="lower">
+            <div class="user-details">
+<h2> Me and this website </h2>
+<p style="text-align: justify;"> &nbsp;&nbsp;&nbsp;&nbsp;I am a PhD student at University of Illinois Urbana-Champaign majoring in Physics. I built this website (source code <a href="https://github.com/yk-liu/yk-liu.github.io">here</a>) to share my understanding of things (mostly interesting theories) I have learned. The most recent notes are often in progress, for I like to keep a few projects running at the same time. You are always welcomed to comment on my posts for suggestions or discussions. Some of the old notes were written in Chinese. You can learn more at the <a href="/about"> about page</a>. </p>
+<div class="analytics"  style="border: solid lightgrey; border-radius: 5px;">
+	<h3> Analytics </h3>
+	  
+<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=34495e&w=300&t=tt&d=MlqUzlcZFdHetSQuxml5oHyt9RwVjZrsGbvyaRpMwgU&co=f2f2f2&ct=808080&cmo=42b983&cmn=61f3b1" async></script>
+
+	<p> <small> If you are not seeing a map, please disable Ad block and refresh </small></p>
+</div>
+</div>
+<div class="permlinks">
+<h2>Recent Posts</h2>
+<dl>
+	
+	<dt><code>30 Oct 2020 </code><i class="fas fa-angle-double-right" aria-hidden="true"></i><a href="/2020/MathJax-Update/">MathJax Update and Fix</a> &nbsp;
+
+<code style="background-color: #42B4B9; color: white;"><b>Completed</b></code> 
+
+	
+ <dd style="text-align: justify"><p>Somehow this site’s mathjax suddenly stopped working. This post is to test that.</p>
+
+    </dd>
+	
+	
+	<dt><code>07 Mar 2020 </code><i class="fas fa-angle-double-right" aria-hidden="true"></i><a href="/2020/My-Grand-Design/">My Grand Design</a> &nbsp;
+
+<code style="background-color: #42B4B9; color: white;"><b>Completed</b></code> 
+
+	
+ <dd style="text-align: justify"><p>This post is me trying to figure out where to go next, as this websites’ contents are about to meet to achieve a unified goal.</p>
+
+    </dd>
+	
+	
+	<dt><code>05 Mar 2020 </code><i class="fas fa-angle-double-right" aria-hidden="true"></i><a href="/2020/The-Amazing-World-of-Diagrams/">The Amazing World Of Diagrams</a> &nbsp;
+
+<code style="background-color: #42B4B9; color: white;"><b>Completed</b></code> 
+
+	
+ <dd style="text-align: justify"><p>This post is the first chapter of a long note that I have been writing and organizing aiming at telling the stories in the languages of mathematical concepts mostly used in condensed matter Physics.</p>
+
+    </dd>
+	
+	
+	<p>... <a href="/blog">Full Posts List</a> </p>
+</dl>
+
+<h2>Upcoming Posts </h2>
+<ul>
+	<li>Braiding Group</li>
+	<li>Berry phase case study</li>
+ <li>Connections on Fiber Bundles</li>
+</ul>
+
+</div >
+
+         </div >
+      </section>
+      <script src= "https://unpkg.com/sweet-scroll/sweet-scroll.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/particles.js@2/particles.js"></script>
+      <script src="https://yk-liu.github.io/assets/js/particles_conf.js"></script>
+      <script>
+         /* sweetScroll load */
+         	document.addEventListener('DOMContentLoaded', () => {
+         		const scroller = new SweetScroll({/* some options */});
+         	}, false);
+      </script>
+   </body>
+   <footer>
+   <p style="margin-left: auto; margin-right: auto;"> 
+      &copy; 2018-2022, Yingkai Liu. This site is open source. <a href="https://github.com/yk-liu/yk-liu.github.io/commits/master/index.html" > Version history</a>. <a href="https://github.com/yk-liu/yk-liu.github.io/edit/master/index.html" target="_blank">Improve this page</a>. <a href="https://github.com/yk-liu/yk-liu.github.io/blob/master/LICENSE.md" target="_blank">License</a>. <a href="https://yk-liu.github.io/info/disclaimer" target="_blank">Disclaimer</a>. 
+   </p>
+	 
+	 
+</footer>
+
+<link rel="stylesheet" href="https://yk-liu.github.io/assets/css/footer.css" > 
+</html>
