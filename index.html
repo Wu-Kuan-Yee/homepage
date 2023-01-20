@@ -1,1 +1,955 @@
-Hi! 我是平中, 现在在 USTC.
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>陈童的量子新世界 &#8211; 《量子力学新讲》、《经典力学新讲》等教材初稿</title>
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=74'
+					+ '&is_singular=';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9uZXdxdWFudGEuY29t"
+		+ "&wpcomid=181236883"
+		+ "&time=1674220830";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//newquantadotcom.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts-api.wp.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="陈童的量子新世界 &raquo; Feed" href="https://newquanta.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="陈童的量子新世界 &raquo; 评论Feed" href="https://newquanta.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<script>
+window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1652185836h&ver=6.2-alpha-54936"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link crossorigin='anonymous' rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytUttWAjEM/CG7YVVQHjx8S7ebswbSy2lasH9vWQEXRPDBl55Ok5lk0sAuKONdQpfAZhU4D+QEdsF4q8QSY7lAjRF5gOu0NaagzeaAIUTfZ5PIO7D1xiiQ3tGiSt6zQBUNOkHaVZUi9JEQ3S11pg1+1xjRj/Rj7pAr7DAONRIRtu28mTUz6DJxDx37UaCLOhaQVBj/Q2j0dhIiZzj3+4YFLPakkWt472gCAuuCUTEO2pTGkrtPr7EpPiP93vzY6WR4uvic1BCp/7P/C4moE7lB7tCNP9Aem/a1aZWQDYwq4rZ5gp4knTLUudDJf30Aw1qEjBonLFctT/Zk/1HqsFyX07pB+9ryrgsRRVQ9LWV7LFl5K/vWLl6eZ/PlcjFffwKpnzWc?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+.wp-block-cover__image-background.has-parallax {
+	background-size: cover;
+}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--shadow--natural: 0 .2rem .3rem 0 rgba(0,0,0, 0.3), 0 .5rem .6rem 0 rgba(0,0,0, 0.4);--wp--preset--shadow--sharp: .5rem .5rem 0 0 rgba(0,0,0, 0.4);--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--dark-gray: #1a1a1a;--wp--preset--color--medium-gray: #686868;--wp--preset--color--light-gray: #e5e5e5;--wp--preset--color--blue-gray: #4d545c;--wp--preset--color--bright-blue: #007acc;--wp--preset--color--light-blue: #9adffd;--wp--preset--color--dark-brown: #402b30;--wp--preset--color--medium-brown: #774e24;--wp--preset--color--dark-red: #640c1f;--wp--preset--color--bright-red: #ff675f;--wp--preset--color--yellow: #ffef8e;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+</style>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css?m=1436783281j&cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-fonts-css' href='https://fonts-api.wp.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext&#038;display=fallback' media='all' />
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjcEOgjAQRH9IHCFK4sH4KUaWDRbabcNuA/y9DfHgwYO3mcmbGSypoijGYgi5Sj4PThQjW3rS9PFIc+wzmYuChxPCwMKzKz39LY+kesDXtL04sCLlDraUYFO3GrNAbfP8P15AdD7StF/cw61uL9dT3TbnZnwDR1BMvQ==?cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css' href='https://s0.wp.com/wp-content/themes/pub/twentysixteen/css/ie.css?m=1448353951h&#038;ver=20170530' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css' href='https://s0.wp.com/wp-content/themes/pub/twentysixteen/css/ie8.css?m=1493067000h&#038;ver=20170530' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css' href='https://s0.wp.com/wp-content/themes/pub/twentysixteen/css/ie7.css?m=1448353951h&#038;ver=20170530' media='all' />
+<![endif]-->
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-10-1' href='https://s0.wp.com/_static/??-eJx9jUEOwjAMBD+EMRGtxAXxljYyISixo9pR2t+TcgEu3HZWGg22Al7YiA3tQZkUS53RWj82jasRMXpVVNsSQSte8rHzAb/EXKGkGiIrBhJI4ieLwj8A9zTF5Z+60Jwk9BnewQ/u0i1f3eiG8XR27vJ8AeH3Q6k=?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link crossorigin='anonymous' rel='stylesheet' id='all-css-12-1' href='https://s0.wp.com/_static/??-eJyVjUEKwjAQRS9kHCo10IV4FImTkKROZkInQby9bXEjrty9B5/34VkNCrfADUo3lXrMrDCHVh0+Pg51Ed+xZWEoK1FQ0OSW4J33rx0zxyOqHuDf3i0zggpmR4Ykin7JT7OlUNb3NEIkuTvaBtdyGezZjqdpssP8Bj+XTks=?cssminify=yes' type='text/css' media='all' />
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"181236883","siteURL":"https:\/\/newquanta.com","xhrURL":"https:\/\/newquanta.com\/wp-admin\/admin-ajax.php","nonce":"7409fe0198","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/PcgrZx-1c","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"\u6536\u8d77\u6b64\u680f","unfoldBar":"\u5c55\u5f00\u6b64\u680f"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyFi0EOgjAQRS9kGZHAzngWwBGm6UxrOw309tYEF7px9ZP33octmNmLoijYBOwncmhywjgulRmSh29sOsF3F52aEP1efp2uyJgg5Al0q6Ak2hVR3qdV2fWfA8ns8r2mVdhnxliOaZjkb2SYljgqHvGNr+0wDF1/6c6tfQEuqE4l'></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://newquantadotcom.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://newquanta.com/" />
+<link rel='shortlink' href='https://wp.me/PcgrZx-1c' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fnewquanta.com%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fnewquanta.com%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="陈童的量子新世界" />
+<meta property="og:description" content="《量子力学新讲》、《经典力学新讲》等教材初稿" />
+<meta property="og:url" content="https://newquanta.com/" />
+<meta property="og:site_name" content="陈童的量子新世界" />
+<meta property="og:image" content="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg" />
+<meta property="og:image:alt" content="" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<meta name="twitter:text:title" content="首页" />
+<meta name="twitter:image" content="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg?w=144" />
+<meta name="twitter:card" content="summary" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="search" type="application/opensearchdescription+xml" href="https://newquanta.com/osd.xml" title="陈童的量子新世界" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="application-name" content="陈童的量子新世界" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="《量子力学新讲》、《经典力学新讲》等教材初稿" /><meta name="msapplication-task" content="name=订阅;action-uri=https://newquanta.com/feed/;icon-uri=https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=16" /><meta name="msapplication-task" content="name=注册免费博客;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com 支持;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com 论坛;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="嗨，我是陈童。中国科学院理论物理博士，本科就读于中国科学技术大学近代物理系。目前在东华理工大学理学院物理系任教&hellip;" />
+<link rel="icon" href="https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=32" sizes="32x32" />
+<link rel="icon" href="https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=180" />
+<meta name="msapplication-TileImage" content="https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=270" />
+</head>
+
+<body class="home page-template-default page page-id-74 wp-embed-responsive customizer-styles-applied highlander-enabled highlander-light">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
+
+		<header id="masthead" class="site-header">
+			<div class="site-header-main">
+				<div class="site-branding">
+					<a href="https://newquanta.com/" class="site-logo-link" rel="home" itemprop="url"></a>
+											<p class="site-title"><a href="https://newquanta.com/" rel="home">陈童的量子新世界</a></p>
+												<p class="site-description">《量子力学新讲》、《经典力学新讲》等教材初稿</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">菜单</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" aria-label="主要菜单">
+								<div class="menu-primary-container"><ul id="menu-primary" class="primary-menu"><li id="menu-item-20" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-74 current_page_item menu-item-20"><a href="https://newquanta.com/" aria-current="page">首页</a></li>
+<li id="menu-item-66" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-66"><a href="https://newquanta.com/%e3%80%8a%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《量子力学新讲》下载</a></li>
+<li id="menu-item-305" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-305"><a href="https://newquanta.com/%e3%80%8a%e7%90%86%e8%ae%ba%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典力学新讲》下载</a></li>
+<li id="menu-item-641" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-641"><a href="https://newquanta.com/%e3%80%8a%e5%bc%95%e5%8a%9b%e8%ae%ba%e8%ae%b2%e4%b9%89%e3%80%8b%e4%b8%8b%e8%bd%bd/">《引力论讲义》下载</a></li>
+<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820"><a href="https://newquanta.com/%e5%a8%81%e6%bb%95%ef%bc%9a%e5%85%89%e7%ba%bf%e3%80%81%e5%a5%87%e7%82%b9%ef%bc%8c%e4%bb%a5%e5%8f%8a%e5%85%b6%e5%ae%83%ef%bc%88%e4%b8%ad%e6%96%87%e7%89%88%ef%bc%89/">威滕：光线、奇点，以及其它（中文版）</a></li>
+<li id="menu-item-394" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-394"><a href="https://newquanta.com/%e3%80%8a%e7%bb%8f%e5%85%b8%e5%9c%ba%e8%ae%ba%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典场论新讲》下载</a></li>
+<li id="menu-item-162" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-162"><a href="https://newquanta.com/%e5%86%99%e7%bb%99%e5%ad%a6%e7%94%9f%e7%9a%84%e6%95%b0%e5%ad%a6%e7%89%a9%e7%90%86%e5%b0%8f%e6%96%87%e7%ab%a0/">数理小文章</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://newquanta.com/about/">关于</a></li>
+<li id="menu-item-23" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-23"><a href="https://newquanta.com/contact/">联系信息</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://newquanta.com/blog/">博客</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+											<div class="header-image">
+					<a href="https://newquanta.com/" rel="home">
+						<img src="https://defaultcustomheadersdata.files.wordpress.com/2016/07/dch_header31.jpg?resize=1200,280" srcset="" sizes="" width="1200" height="280" alt="陈童的量子新世界">
+					</a>
+				</div><!-- .header-image -->
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main">
+		
+<article id="post-74" class="post-74 page type-page status-publish hentry">
+	<header class="entry-header">
+		<h1 class="entry-title">首页</h1>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>    嗨，我是陈童。中国科学院理论物理博士，本科就读于中国科学技术大学近代物理系。目前在东华理工大学理学院物理系任教。主要从事量子力学相关领域的研究和教学。主讲物理系四大力学相关课程尤其是量子力学课程多年。这个站点主要用于发布我正在写作中的量子力学等课程的新式教材，争取写全一套新式的四大力学吧。</p>
+
+
+
+<div class="wp-block-cover is-light alignfull" style="min-height:58px;"><span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-40 has-background-dim"></span><img data-attachment-id="83" data-permalink="https://newquanta.com/a-1/" data-orig-file="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg" data-orig-size="1024,724" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="a-1" data-image-description="" data-image-caption="" data-medium-file="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg?w=300" data-large-file="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg?w=840" class="wp-block-cover__image-background wp-image-83" alt="" src="https://newquantadotcom.files.wordpress.com/2020/08/a-1.jpg" style="object-position:50% 77%;" data-object-fit="cover" data-object-position="50% 77%" /><div class="wp-block-cover__inner-container">
+<p></p>
+</div></div>
+
+
+
+<div class="wp-block-group alignfull has-background-light-background-color has-background is-layout-flow"><div class="wp-block-group__inner-container">
+<p class="has-text-align-left"><strong>目前已经完成初稿的教材是<strong>《量子力学新讲》</strong>和<strong><strong>《经典力学新讲》</strong></strong>，<strong><strong>正在更新的是</strong>《经典场论新讲》</strong>。其中<strong>《量子力学新讲》</strong>既是我多年教学量子力学的结果，也是我多年思考量子力学的结果。从右上角可以进入相关下载页面，是Latex编辑生成的pdf文件。</strong></p>
+
+
+
+<p><strong>《量子力学新讲》在知乎上的主页(带有读者讨论和评价)：</strong><a href="https://zhuanlan.zhihu.com/c_1248602202186403840" rel="nofollow">https://zhuanlan.zhihu.com/c_1248602202186403840</a></p>
+
+
+
+<p><strong>《经典力学新讲》在知乎上的主页(带有读者讨论和评价)</strong>: <a href="https://www.zhihu.com/column/c_1337076755048714240" rel="nofollow">https://www.zhihu.com/column/c_1337076755048714240</a></p>
+
+
+
+<p><strong>《<a href="https://www.zhihu.com/column/c_1369063831134666752">经典场论新讲》 &#8211; 知乎 (zhihu.com)</a></strong></p>
+
+
+
+<p><strong>《量子力学新讲》、《经典力学新讲》以及《经典场论新讲》版权归我所有，但允许读者将其应用于教学和学习活动中。</strong></p>
+
+
+
+<p>________________________________________</p>
+
+
+
+<p class="has-text-align-left"><strong>《量子力学新讲》有两个基本目标，其一是，展现量子世界的奇妙和量子力学深层次的美。其二是，透彻地呈现量子力学的理论结构。将包括从量子力学入门到研究生量子力学的全部内容。</strong></p>
+
+
+
+<p class="has-text-align-left"><strong>现代讲法，从一开始就糅合了量子信息科学的基本概念，深入讨论了量子力学的基本原理，量子力学中的对称性等内容，包括简介了超对称的基本思想。也会讲解量子力学在理论凝聚态物理中的一些基本应用，包括超导的有效理论和约瑟夫森结，量子霍尔效应，对称性自发破缺等等内容。同时对于量子散射理论也有较深入的讨论，并和粒子物理以及量子场论中的散射理论统一了起来。因此对于学习高能粒子物理的同学应该也会有些帮助。</strong></p>
+
+
+
+<p class="has-text-align-left"><strong>数学处理力求简洁优美，不会有很繁琐枯燥的数学推导。对读者的预备知识要求并不高，主要是对线性代数要有较好的把握。但是要求读者在物理直观和数学能力上有一点点天分。</strong></p>
+
+
+
+<p class="has-text-align-left"><strong>初学者在阅读第二章之前最好先阅读《附录：线性代数概要》。另外，所有章节内容中，打星号的部分肯定属于更深入的内容，初学者可以先跳过去。</strong></p>
+
+
+
+<p class="has-text-align-left"><strong>习题还在逐步累积中，目前只能提供部分习题。</strong></p>
+
+
+
+<p>_________________________________________</p>
+
+
+
+<p><strong>《经典力学新讲》的核心目标是用现代的观点重新整理和澄清经典力学的理论结构，凸显理论之美。这个讲义中的有些内容是我多年的教学积累，但促使我开始写这个新式讲义的主要动机，却是物理学大师Polyakov关于现代经典力学课程的在线视频。读者也许可以在我讲义的多处找到Polyakov的痕迹。</strong></p>
+
+
+
+<p><strong>不过，本讲义并不是对Polyakov课程的跟随，讲义的理论逻辑和Polyakov的课程有些根本性的不同，也和通常的理论力学教材（包括朗道的《力学》）有根本性的不同。比方说，本讲义是将能量和哈密顿量作为第一概念，而不是将拉格朗日量作为第一概念，我们对力这个概念的处理也是这样，是直接用能量随空间位置的变化来定义力，而不是将力作为基本概念引入，总之，我试图将整个理论力学的大厦根基于能量和哈密顿量的概念之上。当然，我并没有抛弃最小作用量原理（本讲义的第二章就是讲最小作用量原理），但由于以哈密顿量为第一概念，我对最小作用量原理的处理也是由相空间的最小作用量原理出发，导出通常的最小作用量原理（朗道的《力学》就是以这一最小作用量原理为出发点的）。在这种处理中，勒让德变换将是一个自然而然的东西。</strong></p>
+
+
+
+<p><strong>值得说明的是，在我看来，这么多年来没有人这样处理经典力学是一件很奇怪的事情。原因有二，第一，哈密顿量由于直接对应能量，当然比拉格朗日量更物理也更好接受，这样看的话通常先引入拉格朗日量，进而将哈密顿量定义为拉格朗日量的勒让德变换就是一件不可思议的事情。从我的教学经验来看，学生往往既不理解为什么有这么一个奇怪的拉格朗日量，也无从理解为什么突然要来这么一个勒让德变换，然后得出一个奇怪的哈密顿量。更有甚者，很多学生学完理论力学之后依然觉得哈密顿量只是碰巧通常等于能量，而不理解哈密顿量就是能量的物理描述，不理解如果你的哈密顿量不能完全描述能量，那要么你就得在哈密顿量中加减一些项，要么就是你对能量的定义不合适，要修改的是你对能量的定义。在我看来，正确的处理就是，先作为对能量的描述引入哈密顿量，再通过最小作用量原理自然地勒让德变换到拉格朗日量。第二，从量子力学来看，量子系统会随时间幺正演化，幺正演化的生成元自然定义了哈密顿算符，哈密顿算符就是能量算符，其本征值就是能量（可见，哈密顿量不是碰巧等于能量，它描述的就是能量！）。无论是从实际的量子力学课程来看，还是从量子力学幺正性来看，哈密顿算符无疑都应该是第一概念。当然，量子力学有路径积分表述，但为了保证幺正性，人们也是需要从幺正演化算符和哈密顿算符出发推导路径积分表述。值得强调的是，在这样的推导中，首先出现的也是相空间作用量，然后你把动量先积掉，才导出通常的作用量，导出费曼的路径积分。这么看来，量子力学的这个推理逻辑天然对应本讲义的逻辑，而不是通常理论力学教材那样建立理论力学的逻辑。</strong></p>
+
+
+
+<p><strong>本书采用诺特技巧（Noether&#8217;s trick）来处理诺特定理，当然这主要是因为诺特技巧本身非常优雅。同时，由此不仅能给出诺特定理恐怕是最简单的证明，而且产生了一个从作用量中得到守恒量的系统办法。</strong></p>
+
+
+
+<p><strong>本书的另一个特色是介绍了外微分形式，并在第五章和第六章中将之应用到哈密顿力学的详细讨论中。正因为如此我们才可以通过辛形式（或者说辛结构）串起哈密顿力学的各个知识点，体现了哈密顿力学就是相空间的辛几何这一现代观点。</strong></p>
+
+
+
+<p><strong>除此之外，我们还证明了哈密顿力学中一系列漂亮而重要的定理，包括诺特定理的重新回顾，刘维尔定理，庞加莱回归定理，还有可积系统的刘维尔-阿诺德定理。尤其是对于后面两个定理，许多经典力学教材是不作讨论或者不给出证明的。</strong></p>
+
+
+
+<p><strong>相比于传统经典力学教材，在理论的应用性内容中，我们额外讨论了限制性三体问题，讨论了什么是拉格朗日点。此外我们还跟着阿诺德的书给出了关于多自由度参数共振的一个精妙讨论。</strong></p>
+
+
+
+<p>_________________________________________</p>
+
+
+
+<p><strong>关于《经典场论新讲》。其实本来准备写一个电动力学新讲的，因为我好歹也教过两年电动力学。奈何实在想不出什么有新意的讲法。后来想到，经典力学、电动力学到研究生阶段的量子场论之间其实有一段空白，这段空白应该是用哈密顿力学和拉格朗日力学的方法来处理电磁场理论，也就是所谓的经典场论，因此才想到写这个《经典场论新讲》。</strong></p>
+
+
+
+<p><strong>这个讲义面向的是学过经典力学和电动力学的学生的。因此诸如静电场静磁场之类电动力学书上已经处理得比较好的内容，这个讲义将不会涉及。但是也有一些电动力学的内容将会用场论的方法重新处理，比方说介质中的电磁场，本书将以一种全新的方法处理介质中的电磁场。总之，本讲义和电动力学知识会有一些交叉，主要在电动力学的那些适合用场论方法处理的主题上。</strong></p>
+
+
+
+<p><strong>对称性将是本讲义的核心线索之一，我们利用对称性来限制场论系统的作用量，也利用对称性来导出守恒定律。特别的，我们详细讨论了U(1)整体对称性，以及如何通过将这个整体对称性局域化来导出U(1)规范场论，也就是电磁场的麦克斯韦方程。本书也详细讨论了时空对称性导致的能动量张量，并把对能动量张量的讨论和应用贯穿全书。本书也讨论了场论系统的对称性自发破缺，我们讨论了如何用场论系统来描述超导的宏观理论，超导的涡旋激发等等课题，也就是涉及通常所谓的规范对称性自发破缺的一些内容。</strong></p>
+
+
+
+<p><strong>本书还将详细讨论狄拉克磁单极、电磁场的theta项、轴子电动力学、Witten效应等等内容，也会简单介绍轴子电动力学在拓扑绝缘体中的应用。本书还将初步讨论非阿贝尔规范场论以及tHooft-Polyakov 磁单极。</strong></p>
+
+
+
+<p><strong>特别的，本书也将讨论如何通过消去系统的一部分自由度来得到剩下自由度的有效理论的基本思想。在现代物理学中，这种有效理论(尤其是有效场论)的思想是极为重要的。另外，本书涉及的现代物理思想还有，经典粒子作为场方程的一种特殊解，也就是孤立子的思想。据我所知，爱因斯坦晚年对这一思想是很着迷的。当然，本书只能对孤立子进行一个极为初步的介绍。</strong></p>
+
+
+
+<p><strong>我个人觉得要想透彻地讲清楚广义相对论以及相关的数学知识，恐怕一门单独的广义相对论课程是更合适的。而且在理论结构上，广义相对论与电磁场理论的联系也不是很紧密，没必要放在同一本书里讲。因此本书不会讲广义相对论。</strong></p>
+
+
+
+<p><strong>总之，与市面上一些内容庞杂的经典场论教材不同，本书将始终把主线放在电磁场理论上。为了和此前的《量子力学新讲》、《经典力学新讲》凑成一个系列我给这个讲义取名《经典场论新讲》。考虑到经典场论方面的合适教材不多，我这个讲义也许能给读者多一种选择吧。</strong></p>
+
+
+
+<p>_________________________________________</p>
+
+
+
+<p><strong>由于是草稿版，以上讲义有一些插图是手绘的，还有一些插图直接取自网络或者是从其它资料里面截图出来的，文中并没有全部一一说明，后续版本会逐渐改过来。</strong></p>
+
+
+
+<p><strong>你的任何反馈对我都很重要，尤其欢迎指出书中的任何错误。</strong>_________________________________________</p>
+
+
+
+<p class="has-text-align-left"><strong>最后，我想借着这里怀念一下中国科大已故的阮图南老师，我永远忘不了他如何用简洁明了的讲述使我理解变分法和泛函导数的实质以及群表示论的实质，也许听过阮老师课的老同学可以明白，我《量子力学新讲》中关于对称性的某些讨论有阮老师的痕迹，而我《经典力学新讲》中关于变分法和泛函导数的讲述实质就是当年从他的讲述中所领悟的。</strong></p>
+</div></div>
+
+
+
+<div class="wp-block-group alignfull is-layout-flow"><div class="wp-block-group__inner-container">
+<div style="height:20px;" aria-hidden="true" class="wp-block-spacer desktop-only"></div>
+
+
+
+<div class="wp-block-columns alignwide is-layout-flex wp-container-4">
+<div class="wp-block-column is-layout-flow" style="flex-basis:67%;">
+<figure class="wp-block-pullquote"><blockquote><p>并非所有流浪者都迷失了自我。</p><cite>J.R.R.TOLKIEN</cite></blockquote></figure>
+</div>
+
+
+
+<div class="wp-block-column is-vertically-aligned-center is-layout-flow" style="flex-basis:33%;"></div>
+</div>
+
+
+
+<p></p>
+</div></div>
+
+
+
+<div class="wp-block-group alignfull has-foreground-background-color has-background is-layout-flow"><div class="wp-block-group__inner-container">
+<div style="height:20px;" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<div class="wp-block-columns alignwide is-layout-flex wp-container-9">
+<div class="wp-block-column is-layout-flow">
+<h4 class="wp-block-heading" id="关于我们">关于我们</h4>
+</div>
+
+
+
+<div class="wp-block-column is-layout-flow">
+<h4 class="wp-block-heading" id="联系我">联系我</h4>
+
+
+
+<ul><li>tongchen@ecut.edu.cn</li></ul>
+</div>
+
+
+
+<div class="wp-block-column is-layout-flow">
+<h4 class="wp-block-heading" id="地址">地址</h4>
+
+
+
+<p></p>
+</div>
+</div>
+
+
+
+<p></p>
+</div></div>
+
+
+
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">分享此文章：</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-74" class="share-twitter sd-button share-icon" href="https://newquanta.com/?share=twitter" target="_blank" title="点击分享到Twitter" ><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-74" class="share-facebook sd-button share-icon" href="https://newquanta.com/?share=facebook" target="_blank" title="点击分享到 Facebook " ><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-181236883-74-63ca951e41391' data-src='//widgets.wp.com/likes/index.html?ver=20220105#blog_id=181236883&amp;post_id=74&amp;origin=newquantadotcom.wordpress.com&amp;obj_id=181236883-74-63ca951e41391&amp;domain=newquanta.com' data-name='like-post-frame-181236883-74-63ca951e41391' data-title='点赞或转载'><h3 class='sd-title'>赞过：</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>赞</span></span> <span class="loading">正在加载……</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-74 -->
+
+	</main><!-- .site-main -->
+
+	
+</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area">
+		<section id="pages-5" class="widget widget_pages"><h2 class="widget-title">页面</h2><nav aria-label="页面">
+			<ul>
+				<li class="page_item page-item-633"><a href="https://newquanta.com/%e3%80%8a%e5%bc%95%e5%8a%9b%e8%ae%ba%e8%ae%b2%e4%b9%89%e3%80%8b%e4%b8%8b%e8%bd%bd/">《引力论讲义》下载</a></li>
+<li class="page_item page-item-303"><a href="https://newquanta.com/%e3%80%8a%e7%90%86%e8%ae%ba%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典力学新讲》下载</a></li>
+<li class="page_item page-item-393"><a href="https://newquanta.com/%e3%80%8a%e7%bb%8f%e5%85%b8%e5%9c%ba%e8%ae%ba%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典场论新讲》下载</a></li>
+<li class="page_item page-item-52"><a href="https://newquanta.com/%e3%80%8a%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《量子力学新讲》下载</a></li>
+<li class="page_item page-item-9"><a href="https://newquanta.com/about/">关于</a></li>
+<li class="page_item page-item-7"><a href="https://newquanta.com/blog/">博客</a></li>
+<li class="page_item page-item-812"><a href="https://newquanta.com/%e5%a8%81%e6%bb%95%ef%bc%9a%e5%85%89%e7%ba%bf%e3%80%81%e5%a5%87%e7%82%b9%ef%bc%8c%e4%bb%a5%e5%8f%8a%e5%85%b6%e5%ae%83%ef%bc%88%e4%b8%ad%e6%96%87%e7%89%88%ef%bc%89/">威滕：光线、奇点，以及其它（中文版）</a></li>
+<li class="page_item page-item-145"><a href="https://newquanta.com/%e5%86%99%e7%bb%99%e5%ad%a6%e7%94%9f%e7%9a%84%e6%95%b0%e5%ad%a6%e7%89%a9%e7%90%86%e5%b0%8f%e6%96%87%e7%ab%a0/">数理小文章</a></li>
+<li class="page_item page-item-8"><a href="https://newquanta.com/contact/">联系信息</a></li>
+<li class="page_item page-item-74 current_page_item"><a href="https://newquanta.com/" aria-current="page">首页</a></li>
+			</ul>
+
+			</nav></section><section id="follow_button_widget-5" class="widget widget_follow_button_widget">
+		<a class="wordpress-follow-button" href="https://newquanta.com" data-blog="181236883" data-lang="zh-cn" >Follow 陈童的量子新世界 on WordPress.com</a>
+		<script type="text/javascript">(function(d){var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');p.type = 'text/javascript';p.async = true;p.src = '//widgets.wp.com/platform.js';f.parentNode.insertBefore(p,f);}(document));</script>
+
+		</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer">
+							<nav class="main-navigation" aria-label="Footer Primary Menu">
+					<div class="menu-primary-container"><ul id="menu-primary-1" class="primary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-74 current_page_item menu-item-20"><a href="https://newquanta.com/" aria-current="page">首页</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-66"><a href="https://newquanta.com/%e3%80%8a%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《量子力学新讲》下载</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-305"><a href="https://newquanta.com/%e3%80%8a%e7%90%86%e8%ae%ba%e5%8a%9b%e5%ad%a6%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典力学新讲》下载</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-641"><a href="https://newquanta.com/%e3%80%8a%e5%bc%95%e5%8a%9b%e8%ae%ba%e8%ae%b2%e4%b9%89%e3%80%8b%e4%b8%8b%e8%bd%bd/">《引力论讲义》下载</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820"><a href="https://newquanta.com/%e5%a8%81%e6%bb%95%ef%bc%9a%e5%85%89%e7%ba%bf%e3%80%81%e5%a5%87%e7%82%b9%ef%bc%8c%e4%bb%a5%e5%8f%8a%e5%85%b6%e5%ae%83%ef%bc%88%e4%b8%ad%e6%96%87%e7%89%88%ef%bc%89/">威滕：光线、奇点，以及其它（中文版）</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-394"><a href="https://newquanta.com/%e3%80%8a%e7%bb%8f%e5%85%b8%e5%9c%ba%e8%ae%ba%e6%96%b0%e8%ae%b2%e3%80%8b%e4%b8%8b%e8%bd%bd/">《经典场论新讲》下载</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-162"><a href="https://newquanta.com/%e5%86%99%e7%bb%99%e5%ad%a6%e7%94%9f%e7%9a%84%e6%95%b0%e5%ad%a6%e7%89%a9%e7%90%86%e5%b0%8f%e6%96%87%e7%ab%a0/">数理小文章</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://newquanta.com/about/">关于</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-23"><a href="https://newquanta.com/contact/">联系信息</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://newquanta.com/blog/">博客</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+			
+			<div class="site-info">
+								<span class="site-title"><a href="https://newquanta.com/" rel="home">陈童的量子新世界</a></span>
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">在WordPress.com的博客.</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202303z' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	</div>
+	<div id="actionbar" style="display: none;"
+			class="actnbr-pub-twentysixteen actnbr-has-follow">
+		<ul>
+						<li class="actnbr-ellipsis actnbr-hidden">
+				<svg class="gridicon gridicons-ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></g></svg>				<div class="actnbr-popover tip tip-top-left actnbr-more">
+					<div class="tip-arrow"></div>
+					<div class="tip-inner">
+						<ul>
+									<li class="actnbr-sitename">
+			<a href="https://newquanta.com">
+				<img alt='' src='https://newquantadotcom.files.wordpress.com/2020/08/timg-1.jpg?w=50' class='avatar avatar-50' height='50' width='50' />				陈童的量子新世界			</a>
+		</li>
+								<li class="actnbr-folded-customize">
+								<a href="https://newquantadotcom.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fnewquantadotcom.wordpress.com%2F">
+									<svg class="gridicon gridicons-customize" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"/></g></svg>									<span>自定义</span>
+								</a>
+							</li>
+																<li class="actnbr-signup"><a href="https://wordpress.com/start/">注册</a></li>
+									<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fnewquanta.com%252F">登录</a></li>
+																	<li class="actnbr-shortlink"><a href="https://wp.me/PcgrZx-1c">复制短链接</a></li>
+																	<li class="flb-report"><a href="http://en.wordpress.com/abuse/">举报此内容</a></li>
+																	<li class="actnbr-subs">
+										<a href="https://subscribe.wordpress.com/">管理订阅</a>
+									</li>
+														</ul>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+			<div id="jp-carousel-loading-overlay">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading">&nbsp;</span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div
+				class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions"
+				itemscope
+				itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<h2 class="jp-carousel-photo-caption"></h2>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="切换照片元数据可见性">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							</span>
+						</a>
+												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="切换照片评论可见性">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskComments)">
+										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+
+								<span class="jp-carousel-has-comments-indicator" aria-label="此图像有评论。"></span>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<h2 class="jp-carousel-photo-title"></h2>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+															<div id="jp-carousel-comments-loading">
+									<span>正在加载评论...</span>
+								</div>
+								<div class="jp-carousel-comments"></div>
+								<div id="jp-carousel-comment-form-container">
+									<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
+									<div id="jp-carousel-comment-post-results"></div>
+																														<form id="jp-carousel-comment-form">
+												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">撰写评论...</label>
+												<textarea
+													name="comment"
+													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+													id="jp-carousel-comment-form-comment-field"
+													placeholder="撰写评论..."
+												></textarea>
+												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+													<div id="jp-carousel-comment-form-commenting-as">
+																													<fieldset>
+																<label for="jp-carousel-comment-form-email-field">电子邮箱地址（必填）</label>
+																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-author-field">显示名称（必填）</label>
+																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-url-field">网站地址</label>
+																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+															</fieldset>
+																											</div>
+													<input
+														type="submit"
+														name="submit"
+														class="jp-carousel-comment-form-button"
+														id="jp-carousel-comment-form-button-submit"
+														value="发表评论" />
+												</div>
+											</form>
+																											</div>
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+							<a class="jp-carousel-image-download" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/newquanta.com\/":74};
+	</script>
+				<link crossorigin='anonymous' rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/_static/??-eJyljFsKhDAMRTc0naAMPj7EtTgxSLVNQ9Pg9lXQFfh37uFyYBeHiQtxgWhOgi2eFVYqMuF2b5CcZsPiE0M8KZACTjmZUgDdvVB2f+M50BdVP/C6+VwfcWXHOFRNW/e/tq669QC1DUV1?cssminify=yes' type='text/css' media='all' />
+<style id='core-block-supports-inline-css'>
+.wp-container-4.wp-container-4,.wp-container-9.wp-container-9{flex-wrap:nowrap;}
+</style>
+<script id='comment-like-js-extra'>
+var comment_like_text = {"loading":"\u6b63\u5728\u52a0\u8f7d\u2026\u2026","swipeUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/comment-likes\/js\/lib\/swipe.js?ver=20131008"};
+</script>
+<script id='twentysixteen-script-js-extra'>
+var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
+</script>
+<script id='jetpack-carousel-js-extra'>
+var jetpackSwiperLibraryPath = {"url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/jetpack-plugin\/production\/_inc\/build\/carousel\/swiper-bundle.min.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"zh","ajaxurl":"https:\/\/newquanta.com\/wp-admin\/admin-ajax.php","nonce":"995a9dde84","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"\u8bc4\u8bba","post_comment":"\u53d1\u8868\u8bc4\u8bba","write_comment":"\u64b0\u5199\u8bc4\u8bba...","loading_comments":"\u6b63\u5728\u52a0\u8f7d\u8bc4\u8bba...","download_original":"\u67e5\u770b\u5168\u5c3a\u5bf8 <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"\u8bf7\u786e\u4fdd\u4e0e\u60a8\u7684\u8bc4\u8bba\u4e00\u8d77\u63d0\u4ea4\u90e8\u5206\u6587\u672c\u3002","no_comment_email":"\u8bf7\u63d0\u4f9b\u7528\u4e8e\u53d1\u8868\u8bc4\u8bba\u7684\u7535\u5b50\u90ae\u4ef6\u5730\u5740\u3002","no_comment_author":"\u8bf7\u63d0\u4f9b\u60a8\u7528\u4e8e\u53d1\u8868\u8bc4\u8bba\u7684\u59d3\u540d\u3002","comment_post_error":"\u62b1\u6b49\uff0c\u53d1\u8868\u60a8\u7684\u8bc4\u8bba\u65f6\u51fa\u9519\u3002\u8bf7\u7a0d\u540e\u91cd\u8bd5\u3002","comment_approved":"\u60a8\u7684\u8bc4\u8bba\u5df2\u83b7\u5f97\u6279\u51c6\u3002","comment_unapproved":"\u6b63\u5728\u5ba1\u6838\u60a8\u7684\u8bc4\u8bba\u3002","camera":"\u7167\u76f8\u673a","aperture":"\u5149\u5708","shutter_speed":"\u5feb\u95e8\u901f\u5ea6","focal_length":"\u7126\u8ddd","copyright":"\u7248\u6743","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/newquantadotcom.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fnewquanta.com%2F","blog_id":"181236883","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=181236883&v=wpcom&tz=8&user_id=0&subd=newquantadotcom","is_public":"1"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJylUdFuwyAM/KFRq+rU7mXap0wEnIYEDMOwNH8/p8umKNXysifM+c4+DhiTMpEKUoFQVfL16oihx5K0GZY7pBxtNcVFgiCVR4ZZpE1RbcwBeob5VFwm6R16foLVXOla/HQG023bWq30bpCxHxUrdpqsx7xDNjEEgdS3qN8AW2HpMAgt1QbKKMDE7lYQaRby4JKoaJCXmMqqdQ8m9+RtpXsuDztXZrUNjlSjMwTNBbNUqmSJd0/09w+8OzLQVOctGJ1jZfS/7B/gIBv34ltoakwS3Ob6X1Pc6YxWWzvdS0fXxc1beD2eL6fny+n8cuy/ADoi8EQ='></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20220105#ver=20220105&amp;lang=zh-cn&amp;lang_ver=1665145811&amp;origin=https://newquanta.com' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> 博主赞过：		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+
+		<script src="//stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'181236883','blog_tz':'8','user_lang':'zh-cn','blog_lang':'zh-cn','user_id':'0'}]);
+_stq.push(['view', {'blog':'181236883','v':'wpcom','tz':'8','user_id':'0','post':'74','subd':'newquantadotcom'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1mNzc2NTVTamdsd0xoLz9RQkM2K298TXY9bERQMXc2MjhEaVZfb2wwakRoSj0mUkp1THptM1NdbkV1WjZIcU9mVWQmPUIvMlN6Jk8wW3NYVEJ3dWZOWExuWD9VNTEucGUwVDREUEpscXB+Y21XfHZwYS1dUUw5R3ZNUzJtVEkxUjJxbHhXTyUvRkhHLzd0SWxBZVlVcFl6bGQ/dTdLL092LiUra3p2cTF1JkZBK2tpU0VyV0RMMDBqYjA1a0V0ZjZuMmUmelczWD12QTBEeXAtejlkY25ZWHJTOWM5YllNc0ZuKy5Jc1dYSFc0SU9FMUxuXUdfPUVYRH55VS8yWW4sW2dyQ1NGcyxwJXNQRUtHSEJLdGZZaXcrNWppN2JbRWJkdVU5ZitPd3A='}]);
+_stq.push([ 'clickTrackerInit', '181236883', '74' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>
