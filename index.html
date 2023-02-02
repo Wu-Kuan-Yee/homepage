@@ -193,9 +193,34 @@
 		
 		
 		
-		<style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: 2%;left: 10%;transform: translate(-68%, -50%);z-idnex:99999;} </style><iframe src="https://zhanyuzhang.github.io/lovely-cat/cat.html" frameborder="0" class="catIframe"></iframe>
+		<!--style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: 2%;left: 10%;transform: translate(-68%, -50%);z-idnex:99999;} </style><iframe src="https://zhanyuzhang.github.io/lovely-cat/cat.html" frameborder="0" class="catIframe"></iframe-->
 		
-		
+		<script src="/live2DModel-master(1)/l2dwidget.min.js"></script>
+<script type="text/javascript">
+  L2Dwidget.init({
+    model: {
+      jsonPath: '/live2DModel-master(1)/live2DModel-master/hijiki/assets/hijiki.model.json',
+    },
+    display: {
+      superSample: 2,
+      width: 150,
+      height: 150,
+      position: 'right',
+      hOffset: 0,
+      vOffset: 0,
+    },
+    mobile: {
+      show: true,
+      scale: 1,
+      motion: true,
+    },
+    react: {
+      opacityDefault: 0.8,
+      opacityOnHover: 0.2,
+    }
+  })
+</script>
+
 		
 		
 		
