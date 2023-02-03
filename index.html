@@ -335,7 +335,32 @@
 		
 		
 		
-		<style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: 5%;left: 10%;transform: translate(-68%, -50%);z-idnex:99999;} </style><script src="live2DModel-master/tororo/assets/tororo.model.json" class="catIframe"></script>
+		<style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: 5%;left: 10%;transform: translate(-68%, -50%);z-idnex:99999;} </style>
+		<script src="live2DModel-master/l2dwidget.min.js" class="catIframe"></script>
+<script type="text/javascript">
+  L2Dwidget.init({
+    model: {
+      jsonPath: 'live2DModel-master/tororo/assets/tororo.model.json',
+    },
+    display: {
+      superSample: 2,
+      width: 150,
+      height: 150,
+      position: 'center',
+      hOffset: 0,
+      vOffset: 0,
+    },
+    mobile: {
+      show: true,
+      scale: 1,
+      motion: true,
+    },
+    react: {
+      opacityDefault: 1.0,
+      opacityOnHover: 1.0,
+    }
+  })
+</script>
 		
 		
 		
