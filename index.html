@@ -288,29 +288,33 @@
 		
 		
 		<script>
- 2 window.onload = function(){            //第一个要执行的事件，会被覆盖
- 3     alert("h5Canvas-master/立体点缀(鼠标移动翻转).js");
- 4 }  
- 5 
- 6 if (typeof window.onload == "function") {    //判断之前是否有windows.onload
- 7     var saved = null;                        //创建一个保存器
- 8     saved = window.onload;                    //把之前的window.onload那胖次吗群殴；奥
- 9 }
-10 
-11 
-12 window.onload = function(){            //最终一个要执行的事件
-13     saved();                        //执行上一个事件
-14     alert("live2DModel-master/l2dwidget.min.js");                //执行本事件
-15 }
-16 
-17 
-18 </script> 
+  window.onload = function(){            //第一个要执行的事件，会被覆盖
+      alert("h5Canvas-master/立体点缀(鼠标移动翻转).js");
+  }  
+  
+  if (typeof window.onload == "function") {    //判断之前是否有windows.onload
+      var saved = null;                        //创建一个保存器
+      saved = window.onload;                    //把之前的window.onload那胖次吗群殴；奥
+  }
+ 
+ 
+ window.onload = function(){            //最终一个要执行的事件
+     saved();                        //执行上一个事件
+     alert("live2DModel-master/l2dwidget.min.js");                //执行本事件
+ }
+ 
+ 
+ </script> 
 		
 		
 		
 		
 		
-		
+		<!--script>
+			jQuery(document).ready(function() {
+				$("#page").load("h5Canvas-master/立体点缀(鼠标移动翻转).html");
+			});
+		</script-->
 		
 		
 		
