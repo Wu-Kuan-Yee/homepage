@@ -250,7 +250,7 @@
 		
 		
 		
-		<script src="h5Canvas-master/立体点缀(鼠标移动翻转).js"></script>
+		<!--script type="text/javascript" src="h5Canvas-master/立体点缀(鼠标移动翻转).js"></script>
 		
 		
 		<script src="live2DModel-master/l2dwidget.min.js"></script>
@@ -264,7 +264,7 @@
       width: 50,
       height: 50,
       position: 'center',
-      hOffset: -100,
+      hOffset: -200,
       vOffset: 0,
     },
     mobile: {
@@ -277,30 +277,41 @@
       opacityOnHover: 1.0,
     }
   })
-	
-  L2Dwidget.init({
-    model: {
-      jsonPath: 'live2DModel-master/hijiki/assets/hijiki.model.json',
-    },
-    display: {
-      superSample: 6,
-      width: 50,
-      height: 50,
-      position: 'center',
-      hOffset: -400,
-      vOffset: 0,
-    },
-    mobile: {
-      show: true,
-      scale: 1,
-      motion: true,
-    },
-    react: {
-      opacityDefault: 1.0,
-      opacityOnHover: 1.0,
-    }
-  })
-</script>
+</script-->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<script>
+ 2 window.onload = function(){            //第一个要执行的事件，会被覆盖
+ 3     alert("h5Canvas-master/立体点缀(鼠标移动翻转).js");
+ 4 }  
+ 5 
+ 6 if (typeof window.onload == "function") {    //判断之前是否有windows.onload
+ 7     var saved = null;                        //创建一个保存器
+ 8     saved = window.onload;                    //把之前的window.onload那胖次吗群殴；奥
+ 9 }
+10 
+11 
+12 window.onload = function(){            //最终一个要执行的事件
+13     saved();                        //执行上一个事件
+14     alert("live2DModel-master/l2dwidget.min.js");                //执行本事件
+15 }
+16 
+17 
+18 </script> 
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
