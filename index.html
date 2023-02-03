@@ -41,10 +41,10 @@
 
 			.content img {
 				float: left;
-				width: 300px;
-				height: 300px;
+				width: 200px;
+				height: 200px;
 				margin: 150px 0 0 80px;
-				border-radius: 150px;
+				border-radius: 100px;
 
 			}
 
@@ -263,6 +263,32 @@
       height: 50,
       position: 'center',
       hOffset: -100,
+      vOffset: 0,
+    },
+    mobile: {
+      show: true,
+      scale: 1,
+      motion: true,
+    },
+    react: {
+      opacityDefault: 1.0,
+      opacityOnHover: 1.0,
+    }
+  })
+</script>
+		
+		<script src="live2DModel-master/l2dwidget.min.js"></script>
+<script type="text/javascript">
+  L2Dwidget.init({
+    model: {
+      jsonPath: 'live2DModel-master/tororo/assets/tororo.model.json',
+    },
+    display: {
+      superSample: 6,
+      width: 50,
+      height: 50,
+      position: 'center',
+      hOffset: -300,
       vOffset: 0,
     },
     mobile: {
