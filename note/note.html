@@ -2,14 +2,74 @@
 <html>
 
 	<head>
+		
+		
+		
+		
+		
+		
+		
+		
 		<meta charset="utf-8">
 		<title>学习笔记</title>
+		
+		
+		
+		
+		
+		
 		<style type="text/css">
 			/* CSS Document */
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			a {
+				text-decoration: none;
+			}
+			.clearfix {
+				*zoom: 1;
+			}
+			
+			
+			.clearfix:after {
+				content: "";
+				display: block;
+				height: 0;
+				visibility: hidden;
+				clear: both;
+			}
+
+			.content img {
+				float: center;
+				width: 160px;
+				height: 160px;
+				margin: 0 0 0 0;
+				border-radius: 80px;
+
+			}
+
+			.content:hover {
+				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.52);
+			}
+
+			.content_r {
+				float: center;
+				width: 500px;
+				margin: 0 0 0 100px;
+				/*	background-color: pink;*/
+			}
+
 			.content_l {
 				float: center;
 				width: 100%;
 				text-align: center;
+			}
+
+			.content_l h5 {
+
+				font-size: 27px;
 			}
 
 			.cc {
@@ -30,83 +90,92 @@
 			.link {
 				margin-top: 30px;
 			}
-
 			
+			.home {
+				margin-top: 10px;
+			}
+
+			/*.link a {
+				display: block;
+				float: center;
+				width: 300px;
+				height: 20px;
+				margin: 0 0 0 0;*/
+				/*	padding: 0 15px;*/
+				/*color: #fff;
+				line-height: 45px;
+				transition: all 0.8s;*/
+				/*	background-color: deeppink;*/
+
+			/*}*/
 
 			.link a:hover {
+				background-color: rgba(0, 201, 243, 0.35);
+			}
+			
+			.home a:hover {
 				background-color: rgba(0, 201, 243, 0.35);
 			}
 
 			.deeppink_1 {
 				background-color: #FF69B4;
+				border-radius: 10px;
 			}
 
 			.dodgerblue {
 				background-color: #CD5C5C;
+				border-radius: 10px;
 			}
 
 			.magenta {
 				background-color: #6B8E23;
+				border-radius: 10px;
 			}
 
 			.orange {
 				background-color: orange;
+				border-radius: 10px;
 			}
 			.article{text-decoration: none;padding: 20px 25px;background: Orange;border-radius: 10px;color: white;}
+			.homepage{text-decoration: none;padding: 10px 15px;background: #CD5C5C;border-radius: 10px;color: white;margin: 0 0 0 20px;}
+			body {cursor:url(白黑金三款指针/Luxus-Gold/LuxusGold-hidpi/Handwriting.cur),auto;}
 		</style>
+		<iframe src="h5Canvas-master/立体点缀(鼠标移动翻转).html" frameborder="0" width="100%" height="100%" style="z-index: -10;width: 100%;position: fixed;"></iframe>
 	</head>
-		<!--script type="text/javascript" src="h5Canvas-master/立体点缀(鼠标移动翻转).js"></script-->
-		 <!--div id="content" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></div>
- <script>
- $('#content').load("h5Canvas-master/立体点缀(鼠标移动翻转).html");
- </script-->
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
 	<body>
-		
-		<iframe src="h5Canvas-master/立体点缀(鼠标移动翻转).html" frameborder="0" width="100%" height="100%" style="z-index: -1;width: 100%;position: fixed;"></iframe>
-		
-		<div class="content">
-			
-			
-				<div class="content_l clearfix">
+		<br />
+		<div class="home">
+			<a href="https://wu-kuan-yee.github.io/homepage/" class="homepage" target="_self" style="left">首页</a>
+		</div>
+				<div class="content_l">
+					<!--br />
 					<br />
-					<br />
-					<a href="https://wu-kuan-yee.github.io/homepage/" class="dodgerblue" target="_self" style="left">首页</a>
-					<br />
-					<br />
-					<h2 style="color: #CD5C5C;">学习笔记</h2>
+					<a href="https://wu-kuan-yee.github.io/homepage/" class="dodgerblue" target="_self" style="left">首页</a-->
+					
+					
+					<h1 style="color: #CD5C5C;">学习笔记</h1>
 					<br />
 					<br />
 					
-					<div class="link">
-						
-					</div>
+					
 				</div>
-			</div>
-		</div>
+			
 		
-		<script src="live2d/L2Dwidget.min.js"></script>
+		
+		
+		<script src="live2DModel-master/l2dwidget.min.js" class="catIframe"></script>
 <script type="text/javascript">
   L2Dwidget.init({
     model: {
-      jsonPath: 'live2d/tororo/assets/tororo.model.json',
+      jsonPath: 'live2DModel-master/tororo/assets/tororo.model.json',
     },
     display: {
       superSample: 2,
-      width: 150,
-      height: 150,
-      position: 'left',
-      hOffset: 0,
+      width: 300,
+      height: 300,
+      position: 'right',
+      hOffset: -100,
       vOffset: 0,
     },
     mobile: {
@@ -115,56 +184,15 @@
       motion: true,
     },
     react: {
-      opacityDefault: 0.8,
-      opacityOnHover: 0.2,
+      opacityDefault: 1.0,
+      opacityOnHover: 1.0,
     }
   })
 </script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!--style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: -8%;left: 8%;transform: translate(-68%, -50%);z-idnex:99999;} </style><iframe src="cat.html" frameborder="0" class="catIframe"></iframe-->
-	
-	
-	<!--script src="live2DModel-master(1)/l2dwidget.min.js"></script>
-<script type="text/javascript">
-  L2Dwidget.init({
-    model: {
-      jsonPath: 'live2DModel-master(1)/live2DModel-master/hijiki/assets/hijiki.model.json',
-    },
-    display: {
-      superSample: 2,
-      width: 100,
-      height: 100,
-      position: 'left',
-      hOffset: 0,
-      vOffset: 0,
-    },
-    mobile: {
-      show: true,
-      scale: 1,
-      motion: true,
-    },
-    react: {
-      opacityDefault: 0.8,
-      opacityOnHover: 0.2,
-    }
-  })
-</script-->
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		
+		
+		
 		
 	</body>
 	
