@@ -24,14 +24,14 @@
 				margin: 0;
 				padding: 0;
 			}
-			
+
 			a {
 				text-decoration: none;
 			}
-			
 			.clearfix {
 				*zoom: 1;
 			}
+			
 			
 			.clearfix:after {
 				content: "";
@@ -40,18 +40,8 @@
 				visibility: hidden;
 				clear: both;
 			}
-			
-			/*.content {
-				width: 160px;
-				height: 160px;
-				margin: 0 0 0 0;
-				border-radius: 10px;
-				background-color: rgba(236, 236, 236, 0.59);
-				transition: all 1.0s;*/
-				/*box-shadow: 0px 0px 20px rgba(0,0,0,0.3);*/
-			/*}*/
-			
-			.img {
+
+			.content img {
 				float: center;
 				width: 160px;
 				height: 160px;
@@ -59,48 +49,48 @@
 				border-radius: 80px;
 
 			}
-			
+
 			.content:hover {
 				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.52);
 			}
-			
+
 			.content_r {
 				float: center;
 				width: 500px;
 				margin: 0 0 0 100px;
 				/*	background-color: pink;*/
 			}
-			
+
 			.content_l {
 				float: center;
 				width: 100%;
 				text-align: center;
 			}
-			
+
 			.content_l h5 {
 
 				font-size: 27px;
 			}
-			
+
 			.cc {
 				margin-top: 10px;
 				color: #FF69B4;
 				font-size: 18px;
 			}
-			
+
 			.color_1 {
 				color: #6B8E23;
 				font-size: 18px;
 			}
-			
+
 			.deeppink {
 				color: orange;
 			}
-			
+
 			.link {
 				margin-top: 30px;
 			}
-			
+
 			.link a {
 				display: block;
 				float: left;
@@ -114,26 +104,26 @@
 				/*	background-color: deeppink;*/
 
 			}
-			
+
 			.link a:hover {
 				background-color: rgba(0, 201, 243, 0.35);
 			}
-			
+
 			.deeppink_1 {
 				background-color: #FF69B4;
 				border-radius: 10px;
 			}
-			
+
 			.dodgerblue {
 				background-color: #CD5C5C;
 				border-radius: 10px;
 			}
-			
+
 			.magenta {
 				background-color: #6B8E23;
 				border-radius: 10px;
 			}
-			
+
 			.orange {
 				background-color: orange;
 				border-radius: 10px;
@@ -327,7 +317,7 @@
 		
 		
 		
-		<!--div class="content"-->
+		<div class="content">
 			
 			<div class="content_r clearfix">
 				<div class="content_l clearfix">
@@ -343,7 +333,7 @@
 					<p class="color_1">咸鱼一条!</p>
 					<br />
 					<p class="deeppink">不怕路太远, 只怕走错路...</p>
-					<p class="deeppink">Don't be afraid of the long road, just be afraid of taking the wrong path...</p>
+					<p class="deeppink">Don't be afraid of a long journey, just afraid of taking the wrong path...</p>
 					<div class="link">
 						<a href="https://wu-kuan-yee.github.io/homepage/" class="dodgerblue" target="_self">首页</a>
 						<a href="article/article.html" class="deeppink_1" target="_self">思考记录短文</a>
@@ -353,7 +343,7 @@
 					</div>
 				</div>
 			</div>
-		<!--/div-->
+		</div>
 		
 		<!--script type="text/javascript" src="h5Canvas-master/立体点缀(鼠标移动翻转).js"></script-->
 		
@@ -485,7 +475,7 @@
 		
 		
 		<!--style>@media only screen and (max-width: 800px){.catIframe{display:none;}}.catIframe {position: fixed;width: 400px;bottom: 5%;left: 10%;transform: translate(-68%, -50%);z-idnex:99999;} </style-->
-		<script src="live2DModel-master/l2dwidget.min.js"></script>
+		<script src="live2DModel-master/l2dwidget.min.js" class="catIframe"></script>
 <script type="text/javascript">
   L2Dwidget.init({
     model: {
