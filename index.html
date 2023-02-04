@@ -24,14 +24,14 @@
 				margin: 0;
 				padding: 0;
 			}
-
+			
 			a {
 				text-decoration: none;
 			}
+			
 			.clearfix {
 				*zoom: 1;
 			}
-			
 			
 			.clearfix:after {
 				content: "";
@@ -40,7 +40,17 @@
 				visibility: hidden;
 				clear: both;
 			}
-
+			
+			.content {
+				width: 900px;
+				height: 500px;
+				margin: 200px auto 0 auto;
+				border-radius: 10px;
+				background-color: rgba(236, 236, 236, 0.59);
+				transition: all 1.0s;
+				/*box-shadow: 0px 0px 20px rgba(0,0,0,0.3);*/
+			}
+			
 			.content img {
 				float: center;
 				width: 160px;
@@ -49,48 +59,48 @@
 				border-radius: 80px;
 
 			}
-
+			
 			.content:hover {
 				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.52);
 			}
-
+			
 			.content_r {
 				float: center;
 				width: 500px;
 				margin: 0 0 0 100px;
 				/*	background-color: pink;*/
 			}
-
+			
 			.content_l {
 				float: center;
 				width: 100%;
 				text-align: center;
 			}
-
+			
 			.content_l h5 {
 
 				font-size: 27px;
 			}
-
+			
 			.cc {
 				margin-top: 10px;
 				color: #FF69B4;
 				font-size: 18px;
 			}
-
+			
 			.color_1 {
 				color: #6B8E23;
 				font-size: 18px;
 			}
-
+			
 			.deeppink {
 				color: orange;
 			}
-
+			
 			.link {
 				margin-top: 30px;
 			}
-
+			
 			.link a {
 				display: block;
 				float: left;
@@ -104,26 +114,26 @@
 				/*	background-color: deeppink;*/
 
 			}
-
+			
 			.link a:hover {
 				background-color: rgba(0, 201, 243, 0.35);
 			}
-
+			
 			.deeppink_1 {
 				background-color: #FF69B4;
 				border-radius: 10px;
 			}
-
+			
 			.dodgerblue {
 				background-color: #CD5C5C;
 				border-radius: 10px;
 			}
-
+			
 			.magenta {
 				background-color: #6B8E23;
 				border-radius: 10px;
 			}
-
+			
 			.orange {
 				background-color: orange;
 				border-radius: 10px;
@@ -319,7 +329,7 @@
 		
 		<!--div class="content"-->
 			
-			<!--div class="content_r clearfix">
+			<div class="content_r clearfix">
 				<div class="content_l clearfix">
 					<br />
 					<img src="live2DModel-master/Einstein.jpg" alt="">
@@ -339,11 +349,10 @@
 						<a href="article/article.html" class="deeppink_1" target="_self">思考记录短文</a>
 						<a href="note/note.html" class="magenta" target="_self">学习笔记</a>
 						<a href="book/book.html" class="orange" target="_self">书版长文</a>
-						<a href="trial.html" class="orange" target="_self">书版长文</a>
 						<br />
 					</div>
 				</div>
-			</div-->
+			</div>
 		<!--/div-->
 		
 		<!--script type="text/javascript" src="h5Canvas-master/立体点缀(鼠标移动翻转).js"></script-->
