@@ -539,15 +539,20 @@
 		
 		<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    $(document).ready(
-        var busuanziSiteOffset = parseInt(100000);
+    $(document).ready(function() {
+        var int = setInterval(fixCount, 100);
+        var busuanziSiteOffset = parseInt(10000);
         function fixCount() {
             if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                clearInterval(int);
                 $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + busuanziSiteOffset);
             }
         }
-    );
+    });
 </script>
+		<center>
+        <font size="4" color="white">浏览量: <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> 👀👀👀 | 访客数: <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span> 👦👦👦</font>
+</center>
 		
 	</body>
 	
